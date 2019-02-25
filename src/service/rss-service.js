@@ -1,9 +1,9 @@
 export default class rssService  {
 
-   async getRss() {
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-      //const proxyurl = "https://cors.io/?";
-      const url = "https://112.ua/rss/index.rss"; // site that doesnt send Access-Control-*
+   async getRss(urlCategory) {      
+      //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      const proxyurl = "https://cors.io/?";
+      const url = `https://112.ua/rss${urlCategory}/index.rss`; // site that doesnt send Access-Control-*
       let resXml;
       const res = await fetch(proxyurl + url);
       const tmp777 = await res.text();
@@ -16,9 +16,12 @@ export default class rssService  {
       return resXml.body;
    }
 // begin getRssMajor получаем XML данные и парсим их в массив
-   async getRssMajor() {
-      const rssXml = await this.getRss();
+   async getRssParse(urlCategory) {
+      // проверяем полученый url, если он есть то добавляем /
+      urlCategory ? urlCategory ='/'+urlCategory : urlCategory ='';
+      const rssXml = await this.getRss(urlCategory);
       let rssMajor = [];
+      let id = 0;
       // просматриваем каждый item 
       rssXml.querySelectorAll('item').forEach((item) => {           
          // регулярное выражение для получение названия новости
@@ -31,11 +34,41 @@ export default class rssService  {
          let urlImg = item.getElementsByTagName('description')[0].innerHTML.match(urlImgRegExp)[0];
          // регулярное выражение для получение moreInfo
          const moreInfoRegExp = /^\s+(.*)\]]>/;
-         let moreInfo = item.getElementsByTagName('description')[0].innerText.match(moreInfoRegExp)[1];
-         let dateNews = item.getElementsByTagName('pubDate')[0].innerText;
+         let moreInfo = '';
+         if(item.getElementsByTagName('description')[0].length){
+            moreInfo = item.getElementsByTagName('description')[0].innerText.match(moreInfoRegExp)[1];
+         }
+            
+         // регулярное выражение для получение id_category
+         //const idCategoryRegExp = /[^:'\/]+\/(\w+)/;
+
+         const idCategoryRegExp = /\/+(\w+)\//;         
+         let idCategory = item.getElementsByTagName('guid')[0].innerText.match(idCategoryRegExp);
+
+         let dateNews;
+         if(urlCategory === '/'){
+            dateNews = item.getElementsByTagName('pubDate')[0].innerText;
+         }else{
+            // регулярное выражение для получение dateNews
+            const moreInfoRegExp = /[0-9][^:]+\S[^:]+/;
+            dateNews = item.getElementsByTagName('pubDate')[0].innerText.match(moreInfoRegExp)[0];            
+         }
+
+
+
+         
          let category = item.getElementsByTagName('category')[0].innerText;
+         let link = item.getElementsByTagName('link')["0"].nextSibling.data;
          // записываем в массив 
-         rssMajor = [...rssMajor, {title: title, urlImg: urlImg, moreInfo: moreInfo, dateNews:dateNews, category:category}];
+         rssMajor = [...rssMajor, {id: id++, 
+                                 idCategory: idCategory, 
+                                 title: title,
+                                 urlImg: urlImg, 
+                                 moreInfo: moreInfo, 
+                                 dateNews:dateNews, 
+                                 category:category, 
+                                 link: link}];
+
       });                    
       return rssMajor;
    }

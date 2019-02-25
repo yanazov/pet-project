@@ -1,0 +1,14 @@
+.article-img{
+   display: flex;
+   position: fixed;
+    top: 85px;
+    right: 0;
+    width: 400px;
+   align-self: stretch;
+   background-color: #222;
+}
+
+
+/*
+
+*/

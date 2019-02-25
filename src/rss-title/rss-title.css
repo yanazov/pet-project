@@ -1,0 +1,57 @@
+.rss-title{
+   display: block;
+   position: fixed;
+   top: 85px;
+   left: 0;
+   margin: 0;
+   padding: 0;
+   width: 300px;
+   align-self: stretch;
+   background-color: #222;
+   list-style: none;
+   height: calc(100% - 85px);
+}
+.rss-title-ul{
+   height: 100%;
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}   
+.rss-title-item{
+   padding: 10px;
+   color: #999;
+   border-bottom: 2px solid #444;
+   cursor: pointer;
+   transition: 0.3s;
+   padding-right: 20px;
+}
+.rss-title-item:hover{
+   color: #ccc;
+}
+.rss-title-item-detail{
+   display: flex;
+   font-size: 11px;
+}
+.rss-title-item-detail__category{
+   width: 50%;
+}
+.rss-title-item-detail__date{
+   width: 50%;
+   text-align: right;
+}
+.rss-title-item__header{
+   margin: 10px 0 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

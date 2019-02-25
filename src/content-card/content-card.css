@@ -1,0 +1,45 @@
+.card{
+   display: inline-block;
+   width: 24%;
+   min-height: 50px;
+   height: 300px;;
+   margin: 0.5%;
+   background-color: #191919;
+   cursor: pointer;
+}
+.content-card__img{
+   width: 100%;
+   height: auto;
+   min-height: 60px;
+}
+.content-card_title{
+   height: 119px;
+   overflow: hidden;
+   padding: 10px;
+   color: #999;
+   cursor: pointer;
+   transition: 0.3s;
+}
+.card:hover .content-card_title{   
+   color: #ccc;
+}
+
+@media (min-width: 1000px) and (max-width: 1650px) {
+   .card{
+      width: 31.33%;
+      margin: 1%;
+   }   
+}
+
+@media (min-width: 750px) and (max-width: 1000px) {
+   .card{
+      width: 48%;
+      margin: 1%;
+   }   
+}
+@media (max-width: 750px) {
+   .card{
+      width: 98%;
+      margin: 1%;
+   }   
+}
