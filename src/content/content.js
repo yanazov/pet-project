@@ -15,7 +15,7 @@ export default class Content extends React.Component{
       return(
          <div className='content'>
             
-            {!page_article ? <Article/> : <ContentCard rssSelect={rssSelect} 
+            {page_article ? <Article/> : <ContentCard rssSelect={rssSelect} 
                            loading={loading}
                            onOpenArticle = {(link) => onOpenArticle(link)}/>}
             

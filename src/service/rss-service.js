@@ -42,8 +42,8 @@ export default class rssService  {
          // регулярное выражение для получение id_category
          //const idCategoryRegExp = /[^:'\/]+\/(\w+)/;
 
-         const idCategoryRegExp = /\/+(\w+)\//;         
-         let idCategory = item.getElementsByTagName('guid')[0].innerText.match(idCategoryRegExp);
+         const idCategoryRegExp = /.*\/\/+\w+.ua\/(\S+)\//;         
+         let idCategory = item.getElementsByTagName('guid')[0].innerText.match(idCategoryRegExp)[1];
 
          let dateNews;
          if(urlCategory === '/'){
@@ -56,9 +56,14 @@ export default class rssService  {
 
 
 
-         
+
+           
+         const idLinkRegExp = /\/+(\w+.*)\/+(\S+)/;          
+         let link = item.getElementsByTagName('link')["0"].nextSibling.data.match(idLinkRegExp)[2];
+         /*if(Array.isArray(link)){
+            link = link[2];
+         }*/
          let category = item.getElementsByTagName('category')[0].innerText;
-         let link = item.getElementsByTagName('link')["0"].nextSibling.data;
          // записываем в массив 
          rssMajor = [...rssMajor, {id: id++, 
                                  idCategory: idCategory, 

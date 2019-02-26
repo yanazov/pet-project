@@ -6,6 +6,7 @@
    margin: 0.5%;
    background-color: #191919;
    cursor: pointer;
+   text-decoration: none;
 }
 .content-card__img{
    width: 100%;

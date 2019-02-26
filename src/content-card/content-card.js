@@ -2,6 +2,7 @@ import React from 'react';
 
 import './content-card.css'
 import Loader from '../loader/loader'
+import {Link, withRouter} from 'react-router-dom'
 
 
 const  ContentCard = (props) =>{
@@ -11,13 +12,13 @@ const  ContentCard = (props) =>{
 
 
    const Cards = rssSelect.map((item) => {
-      //console.log('смотрим что получили:', item)
+      console.log('смотрим что получили:', item)
       return(
          //<div key={item.id} className='card'>
-         <div key={item.id} className='card' onClick = {(link) => props.onOpenArticle(item.link)}>
+         <Link to={`${item.idCategory}/${item.link}`} key={item.id} className='card' onClick = {(link) => props.onOpenArticle(item.link)}>
             <img className='content-card__img' src={item.urlImg } alt=''/>
             <div className='content-card_title'>{item.title }</div>
-         </div>
+         </Link>
       )
    });
 
@@ -28,9 +29,9 @@ const  ContentCard = (props) =>{
          <Loader/>
       )
    };
-
-
+   console.log('адресная строка ==> ', props.location.pathname);
    return(
+      
       <React.Fragment>
          {Cards}
       </React.Fragment>
@@ -39,4 +40,4 @@ const  ContentCard = (props) =>{
 
 };
 
-export default ContentCard;
+export default withRouter(ContentCard);
